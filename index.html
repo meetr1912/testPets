@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawCare - Your Pet Care Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="logo">
+                    <h1>🐾 PawCare</h1>
+                </div>
+                <nav class="nav">
+                    <button class="nav__item nav__item--active" data-section="home">Home</button>
+                    <button class="nav__item" data-section="booking">Book Services</button>
+                    <button class="nav__item" data-section="map">Find Near Me</button>
+                    <button class="nav__item" data-section="community">Community</button>
+                    <button class="nav__item" data-section="pets">My Pets</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Home Section -->
+        <section id="home" class="section section--active">
+            <div class="container">
+                <div class="welcome">
+                    <h2>Welcome to PawCare</h2>
+                    <p>Your one-stop platform for all pet care needs in Halifax</p>
+                </div>
+                
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-cards">
+                        <div class="action-card" data-action="book-vet">
+                            <div class="action-card__icon">🏥</div>
+                            <h4>Book Veterinary</h4>
+                            <p>Schedule a vet appointment</p>
+                        </div>
+                        <div class="action-card" data-action="find-groomer">
+                            <div class="action-card__icon">✂️</div>
+                            <h4>Find Groomer</h4>
+                            <p>Locate nearby groomers</p>
+                        </div>
+                        <div class="action-card" data-action="join-discussion">
+                            <div class="action-card__icon">💬</div>
+                            <h4>Join Discussion</h4>
+                            <p>Connect with pet owners</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-overview">
+                    <div class="overview-cards">
+                        <div class="card">
+                            <div class="card__body">
+                                <h4>Recent Bookings</h4>
+                                <div id="recent-bookings"></div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h4>Forum Activity</h4>
+                                <div id="recent-forum"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="section">
+            <div class="container">
+                <h2>Book Pet Services</h2>
+                
+                <div class="service-categories">
+                    <div class="category-filters">
+                        <button class="category-filter category-filter--active" data-category="all">All Services</button>
+                        <button class="category-filter" data-category="veterinary">🏥 Veterinary</button>
+                        <button class="category-filter" data-category="grooming">✂️ Grooming</button>
+                        <button class="category-filter" data-category="walking">🚶 Walking</button>
+                        <button class="category-filter" data-category="boarding">🏠 Boarding</button>
+                    </div>
+                </div>
+
+                <div class="service-providers" id="service-providers"></div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section id="map" class="section">
+            <div class="container">
+                <h2>Find Services Near You</h2>
+                
+                <div class="map-controls">
+                    <div class="map-filters">
+                        <select class="form-control" id="map-filter">
+                            <option value="all">All Services</option>
+                            <option value="veterinary">Veterinary</option>
+                            <option value="grooming">Grooming</option>
+                            <option value="walking">Walking</option>
+                            <option value="boarding">Boarding</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <div class="map" id="pet-map">
+                        <div class="map-markers" id="map-markers"></div>
+                    </div>
+                    <div class="map-sidebar">
+                        <h3>Nearby Services</h3>
+                        <div id="map-service-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="section">
+            <div class="container">
+                <div class="community-header">
+                    <h2>Community Forum</h2>
+                    <button class="btn btn--primary" id="new-post-btn">New Post</button>
+                </div>
+                
+                <div class="forum-categories">
+                    <button class="forum-category forum-category--active" data-category="all">All Categories</button>
+                    <button class="forum-category" data-category="health">Health & Wellness</button>
+                    <button class="forum-category" data-category="nutrition">Nutrition</button>
+                    <button class="forum-category" data-category="training">Training & Behavior</button>
+                    <button class="forum-category" data-category="general">General Discussion</button>
+                </div>
+
+                <div class="forum-posts" id="forum-posts"></div>
+            </div>
+        </section>
+
+        <!-- My Pets Section -->
+        <section id="pets" class="section">
+            <div class="container">
+                <div class="pets-header">
+                    <h2>My Pets</h2>
+                    <button class="btn btn--primary" id="add-pet-btn">Add Pet</button>
+                </div>
+                
+                <div class="pet-profiles" id="pet-profiles"></div>
+
+                <div class="booking-history">
+                    <h3>Booking History</h3>
+                    <div id="booking-history"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="booking-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Book Service</h3>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label class="form-label">Select Pet</label>
+                        <select class="form-control" id="booking-pet" required>
+                            <option value="">Choose your pet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service</label>
+                        <select class="form-control" id="booking-service" required>
+                            <option value="">Choose service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="booking-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <select class="form-control" id="booking-time" required>
+                            <option value="">Select time</option>
+                            <option value="9:00 AM">9:00 AM</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                            <option value="3:00 PM">3:00 PM</option>
+                            <option value="4:00 PM">4:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes (Optional)</label>
+                        <textarea class="form-control" id="booking-notes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="post-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Create New Post</h3>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <form id="post-form">
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" id="post-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-control" id="post-category" required>
+                            <option value="">Choose category</option>
+                            <option value="health">Health & Wellness</option>
+                            <option value="nutrition">Nutrition</option>
+                            <option value="training">Training & Behavior</option>
+                            <option value="general">General Discussion</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Content</label>
+                        <textarea class="form-control" id="post-content" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
